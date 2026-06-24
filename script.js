@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let isPlaying = false;
   let isShuffle = false;
-  let isRepeat = false;
+  let repeatMode = 'off';
   let isMuted = false;
   
   let currentVolume = 0.8;
@@ -1033,10 +1033,45 @@ document.addEventListener('DOMContentLoaded', async () => {
     shuffleBtn.classList.toggle('active', isShuffle);
   }
 
+  function updateRepeatUI() {
+    const repeatIcon = repeatBtn.querySelector('i');
+    const isActive = repeatMode !== 'off';
+
+    repeatBtn.classList.toggle('active', isActive);
+    repeatBtn.classList.toggle('repeat-one', repeatMode === 'one');
+    repeatBtn.classList.toggle('repeat-all', repeatMode === 'all');
+
+    if (repeatIcon) {
+      if (repeatMode === 'one') {
+        repeatIcon.className = 'fa-solid fa-repeat-one';
+      } else {
+        repeatIcon.className = 'fa-solid fa-repeat';
+      }
+    }
+
+    if (repeatMode === 'off') {
+      repeatBtn.title = 'Repeat Off';
+    } else if (repeatMode === 'all') {
+      repeatBtn.title = 'Repeat All';
+    } else {
+      repeatBtn.title = 'Repeat One (Self)';
+    }
+  }
+
   // Toggle Repeat Mode
   function toggleRepeat() {
-    isRepeat = !isRepeat;
-    repeatBtn.classList.toggle('active', isRepeat);
+    if (repeatMode === 'off') {
+      repeatMode = 'all';
+      showToast('Repeat All enabled', 'info');
+    } else if (repeatMode === 'all') {
+      repeatMode = 'one';
+      showToast('Repeat One enabled', 'info');
+    } else {
+      repeatMode = 'off';
+      showToast('Repeat Off', 'info');
+    }
+
+    updateRepeatUI();
   }
 
   // Toggle Mute / Unmute
@@ -1414,6 +1449,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Sub-controls (Shuffle/Repeat)
   shuffleBtn.addEventListener('click', toggleShuffle);
   repeatBtn.addEventListener('click', toggleRepeat);
+  updateRepeatUI();
 
   // Mute Handler
   muteBtn.addEventListener('click', toggleMute);
@@ -1533,9 +1569,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Audio Event: Track Ended (Auto-skip or loop)
     aud.addEventListener('ended', () => {
       if (aud !== activeAudio) return;
-      if (isRepeat) {
+      if (repeatMode === 'one') {
         activeAudio.currentTime = 0;
         playTrack();
+      } else if (repeatMode === 'all') {
+        nextTrack();
       } else {
         nextTrack();
       }
