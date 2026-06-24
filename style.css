@@ -1079,6 +1079,42 @@ input[type="range"]::-moz-range-thumb:hover {
   text-shadow: 0 0 10px rgba(0, 255, 102, 0.5);
 }
 
+/* Repeat-One (Repeat Self) premium badge styling */
+#btn-repeat {
+  position: relative;
+}
+
+/* When repeat-one is active add a small '1' badge top-right of the icon */
+#btn-repeat.repeat-one {
+  color: var(--accent-emerald);
+  text-shadow: 0 0 12px rgba(0, 255, 102, 0.45);
+}
+
+#btn-repeat.repeat-one::after {
+  content: '1';
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  line-height: 1;
+  color: var(--bg-darker);
+  background: var(--accent-emerald);
+  padding: 2px 5px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 255, 102, 0.08);
+  transform: translate(0, 0);
+  pointer-events: none;
+}
+
+/* Slight variation when button is hovered/active to emphasize premium state */
+#btn-repeat.repeat-one:hover,
+#btn-repeat.repeat-one.active {
+  color: var(--accent-emerald);
+  box-shadow: 0 6px 18px rgba(0, 255, 102, 0.08);
+}
+
 .main-play-btn {
   background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-blue) 100%);
   color: var(--bg-darker) !important;
