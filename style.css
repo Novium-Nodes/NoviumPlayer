@@ -1132,6 +1132,8 @@ input[type="range"]::-moz-range-thumb:hover {
    ========================================================================== */
 #playlist-sidebar {
   gap: 18px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .sidebar-header {
@@ -1329,6 +1331,8 @@ input[type="range"]::-moz-range-thumb:hover {
   overflow-y: auto;
   max-height: 290px;
   padding-right: 4px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 #playlist {
@@ -1341,8 +1345,11 @@ input[type="range"]::-moz-range-thumb:hover {
 /* Playlist Items */
 .playlist-item {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
   padding: 10px 14px;
   background: var(--item-bg);
   border: 1px solid var(--border-neon);
@@ -1367,8 +1374,8 @@ input[type="range"]::-moz-range-thumb:hover {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 1 1 auto;
-  min-width: 0; /* Allow text truncate */
+  flex: 1;
+  min-width: 0;
 }
 
 .item-index-indicator {
@@ -1402,7 +1409,8 @@ input[type="range"]::-moz-range-thumb:hover {
 .item-title-artist {
   display: flex;
   flex-direction: column;
-  min-width: 0; /* Enable truncation on child text */
+  min-width: 0;
+  flex: 1;
 }
 
 .item-title,
