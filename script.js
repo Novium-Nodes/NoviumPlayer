@@ -1034,20 +1034,17 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   function updateRepeatUI() {
-    const repeatIcon = repeatBtn.querySelector('i');
-    const isActive = repeatMode !== 'off';
-
-    repeatBtn.classList.toggle('active', isActive);
+    // Ensure the button reflects state via classes and a consistent base icon.
+    // We use a badge overlay via CSS when `repeat-one` is active to guarantee
+    // a distinct visual (works regardless of font/icon set availability).
+    repeatBtn.classList.toggle('active', repeatMode !== 'off');
     repeatBtn.classList.toggle('repeat-one', repeatMode === 'one');
     repeatBtn.classList.toggle('repeat-all', repeatMode === 'all');
 
-    if (repeatIcon) {
-      if (repeatMode === 'one') {
-        repeatIcon.className = 'fa-solid fa-repeat-one';
-      } else {
-        repeatIcon.className = 'fa-solid fa-repeat';
-      }
-    }
+    // Keep a consistent base icon; visual distinction for 'one' comes from CSS overlay
+    // (a small '1' badge) so users get a premium "repeat self" look even if
+    // a dedicated font icon isn't available.
+    repeatBtn.innerHTML = '<i class="fa-solid fa-repeat"></i>';
 
     if (repeatMode === 'off') {
       repeatBtn.title = 'Repeat Off';
