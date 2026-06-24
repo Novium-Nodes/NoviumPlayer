@@ -1367,7 +1367,7 @@ input[type="range"]::-moz-range-thumb:hover {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-grow: 1;
+  flex: 1 1 auto;
   min-width: 0; /* Allow text truncate */
 }
 
@@ -1405,13 +1405,20 @@ input[type="range"]::-moz-range-thumb:hover {
   min-width: 0; /* Enable truncation on child text */
 }
 
+.item-title,
+.item-artist {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .item-title {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-primary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .playlist-item.active .item-title {
@@ -1421,9 +1428,6 @@ input[type="range"]::-moz-range-thumb:hover {
 .item-artist {
   font-size: 0.75rem;
   color: var(--text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .track-meta-right {
@@ -1433,6 +1437,8 @@ input[type="range"]::-moz-range-thumb:hover {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--text-secondary);
+  flex-shrink: 0;
+  min-width: 0;
 }
 
 .delete-track-btn {
