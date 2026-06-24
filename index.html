@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoviumPlayer - by NoviumNodes</title>
+    <!-- FontAwesome for premium media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Custom JS -->
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div id="app-container">
+      <!-- Header with NoviumNodes Branding -->
+      <header id="app-header">
+        <div class="brand">
+          <i class="fa-solid fa-circle-nodes brand-icon"></i>
+          <h1>Novium<span class="accent-text">Player</span></h1>
+        </div>
+        <div class="header-right">
+          <div class="theme-dropdown-container">
+            <i class="fa-solid fa-palette theme-icon-main"></i>
+            <select id="theme-select" class="theme-select-element" title="Select UI Theme">
+              <option value="neon">Dark Neon Cyberpunk</option>
+              <option value="monochrome">Dark Minimalist Monochrome</option>
+              <option value="light-neon">Light Neon Synthwave</option>
+              <option value="light-minimal">Light Minimalist Classic</option>
+            </select>
+            <i class="fa-solid fa-chevron-down theme-select-arrow"></i>
+          </div>
+          <span class="developer-tag brand-neon">by NoviumNodes</span>
+        </div>
+      </header>
+
+      <!-- Main Layout Split -->
+      <main id="main-layout">
+        <!-- Section 1: Main Player Hub -->
+        <section id="player-hub" class="glass-panel">
+          <div class="player-content">
+            <!-- Cover Art Area -->
+            <div class="cover-container">
+              <div id="cover-art" class="rotating">
+                <!-- Fallback SVG cover with NoviumNodes text if no image is loaded -->
+                <svg viewBox="0 0 300 300" width="100%" height="100%" class="placeholder-svg">
+                  <defs>
+                    <radialGradient id="disc-grad" cx="50%" cy="50%" r="50%">
+                      <stop offset="0%" stop-color="#151d35" />
+                      <stop offset="60%" stop-color="#0c101f" />
+                      <stop offset="90%" stop-color="#05070c" />
+                      <stop offset="100%" stop-color="#00f0ff" />
+                    </radialGradient>
+                    <linearGradient id="neon-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#00f0ff" />
+                      <stop offset="100%" stop-color="#00ff66" />
+                    </linearGradient>
+                  </defs>
+                  <!-- Vinyl disc outer -->
+                  <circle class="vinyl-outer" cx="150" cy="150" r="130" fill="url(#disc-grad)" stroke="url(#neon-glow)" stroke-width="2" />
+                  <!-- Vinyl groove lines -->
+                  <circle class="vinyl-groove" cx="150" cy="150" r="110" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+                  <circle class="vinyl-groove" cx="150" cy="150" r="90" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+                  <circle class="vinyl-groove" cx="150" cy="150" r="70" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1" />
+                  <!-- Center label -->
+                  <circle class="vinyl-label" cx="150" cy="150" r="45" fill="#0c101f" stroke="#00f0ff" stroke-width="1" />
+                  <!-- NoviumNodes Branding text curved or centered -->
+                  <text class="vinyl-text-1" x="150" y="145" text-anchor="middle" fill="#00f0ff" font-family="'Segoe UI', Roboto, sans-serif" font-size="10" font-weight="bold" letter-spacing="1">NOVIUM</text>
+                  <text class="vinyl-text-2" x="150" y="160" text-anchor="middle" fill="#00ff66" font-family="'Segoe UI', Roboto, sans-serif" font-size="8" font-weight="semibold" letter-spacing="0.5">NODES</text>
+                  <!-- Center spindle hole -->
+                  <circle class="vinyl-spindle" cx="150" cy="150" r="8" fill="#05070c" />
+                </svg>
+                <img id="track-img" class="hidden" src="" alt="Track Cover" referrerPolicy="no-referrer" />
+              </div>
+              <div class="visualizer-bars">
+                <span class="bar bar-1"></span>
+                <span class="bar bar-2"></span>
+                <span class="bar bar-3"></span>
+                <span class="bar bar-4"></span>
+                <span class="bar bar-5"></span>
+              </div>
+
+              <!-- Lyrics Panel Overlay -->
+              <div id="lyrics-panel" class="lyrics-panel">
+                <div class="lyrics-panel-header">
+                  <span class="lyrics-panel-title"><i class="fa-solid fa-microphone-lines"></i> LYRICS</span>
+                  <button id="btn-lyrics-close" class="lyrics-close-btn" title="Close Lyrics">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+                <div id="lyrics-panel-body" class="lyrics-panel-body">
+                  <!-- Dynamic Lyrics will load here -->
+                </div>
+              </div>
+
+              <!-- Cover Lyrics Toggle Button -->
+              <button id="btn-lyrics-toggle" class="cover-lyrics-toggle" title="Show Lyrics">
+                <i class="fa-solid fa-microphone-lines"></i>
+              </button>
+            </div>
+
+            <!-- Track Metadata -->
+            <div class="track-info">
+              <h2 id="track-title" class="marquee-text">No track loaded</h2>
+              <p id="track-artist">NoviumNodes Audio System</p>
+            </div>
+
+            <!-- Timeline and Progress -->
+            <div class="timeline-container">
+              <div class="time-counters">
+                <span id="current-time">00:00</span>
+                <span id="total-duration">00:00</span>
+              </div>
+              <div class="progress-wrapper">
+                <input type="range" id="progress-bar" min="0" max="100" value="0" />
+                <div class="progress-fill" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <!-- Media Controls -->
+            <div class="player-controls">
+              <button id="btn-shuffle" title="Shuffle" class="control-btn-sub">
+                <i class="fa-solid fa-shuffle"></i>
+              </button>
+              <button id="btn-prev" title="Previous Track" class="control-btn">
+                <i class="fa-solid fa-backward-step"></i>
+              </button>
+              <button id="btn-play-pause" title="Play/Pause" class="control-btn main-play-btn">
+                <i class="fa-solid fa-play"></i>
+              </button>
+              <button id="btn-next" title="Next Track" class="control-btn">
+                <i class="fa-solid fa-forward-step"></i>
+              </button>
+              <button id="btn-repeat" title="Repeat Track" class="control-btn-sub">
+                <i class="fa-solid fa-repeat"></i>
+              </button>
+            </div>
+
+            <!-- Volume Control Hub -->
+            <div class="volume-container">
+              <button id="btn-mute" title="Mute/Unmute" class="volume-btn">
+                <i class="fa-solid fa-volume-high"></i>
+              </button>
+              <div class="volume-slider-wrapper">
+                <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.8" />
+                <div class="volume-fill" style="width: 80%;"></div>
+              </div>
+            </div>
+
+            <!-- Equalizer Preset Selector -->
+            <div class="equalizer-container">
+              <label for="eq-preset" class="eq-label"><i class="fa-solid fa-sliders"></i> EQ Preset</label>
+              <div class="eq-select-wrapper">
+                <select id="eq-preset" class="eq-select">
+                  <option value="normal">Normal / Flat</option>
+                  <option value="bass">Bass Boost</option>
+                  <option value="vocal">Vocal Enhancer</option>
+                  <option value="electronic">Electronic Beat</option>
+                </select>
+                <i class="fa-solid fa-chevron-down eq-select-arrow"></i>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Playlist Sidebar -->
+        <section id="playlist-sidebar" class="glass-panel">
+          <div class="sidebar-header">
+            <h3><i class="fa-solid fa-list-ul"></i> Media Playlist</h3>
+            <div class="header-actions">
+              <!-- Sort Select/Dropdown -->
+              <div class="sort-select-wrapper">
+                <i class="fa-solid fa-arrow-down-wide-short sort-select-icon"></i>
+                <select id="playlist-sort" class="sort-select" title="Sort playlist">
+                  <option value="recent">Recently Added</option>
+                  <option value="alpha">Alphabetical</option>
+                  <option value="duration">Duration</option>
+                </select>
+              </div>
+
+              <!-- File Upload Input and Stylish Custom Label -->
+              <div class="upload-wrapper">
+                <input type="file" id="file-upload" accept="audio/*" multiple />
+                <label for="file-upload" class="upload-btn">
+                  <i class="fa-solid fa-plus"></i> Add Song
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Playlist Backup (Export/Import) Controls -->
+          <div class="backup-controls-row">
+            <span class="backup-label"><i class="fa-solid fa-cloud-arrow-down"></i> Backup</span>
+            <div class="backup-actions">
+              <button id="btn-export-playlist" class="backup-action-btn" title="Export current playlist as JSON">
+                <i class="fa-solid fa-file-export"></i> Export
+              </button>
+              <div class="import-wrapper">
+                <input type="file" id="playlist-import" accept=".json" />
+                <label for="playlist-import" class="backup-action-btn" title="Import playlist from JSON file">
+                  <i class="fa-solid fa-file-import"></i> Import
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sleep Timer Container -->
+          <div class="sleep-timer-container">
+            <div class="sleep-timer-left">
+              <span class="sleep-label"><i class="fa-solid fa-clock"></i> Sleep Timer</span>
+              <span id="sleep-timer-countdown" class="sleep-countdown hidden">Off</span>
+            </div>
+            <div class="sleep-timer-right">
+              <div class="sleep-select-wrapper">
+                <select id="sleep-timer-select" class="sleep-select" title="Set sleep timer duration">
+                  <option value="off">Off</option>
+                  <option value="15">15 Min</option>
+                  <option value="30">30 Min</option>
+                  <option value="60">60 Min</option>
+                </select>
+                <i class="fa-solid fa-chevron-down sleep-select-arrow"></i>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Search input container for real-time filtering -->
+          <div class="search-container">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="playlist-search" placeholder="Search track or artist..." autocomplete="off" />
+            <button id="btn-clear-search" class="clear-search-btn hidden" title="Clear Search">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          
+          <div class="playlist-wrapper">
+            <ul id="playlist">
+              <!-- Playlist items will be populated dynamically -->
+            </ul>
+          </div>
+
+          <div class="now-playing-mini">
+            <div class="mini-info">
+              <span class="mini-label">ACTIVE TRACK</span>
+              <span id="mini-track-title">None</span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <!-- Prominent, Professional Footer -->
+      <footer id="app-footer">
+        <p>© 2026 NoviumNodes. All rights reserved.</p>
+      </footer>
+    </div>
+
+    <!-- Non-intrusive Toast Notification Container -->
+    <div id="toast-container" class="toast-container"></div>
+  </body>
+</html>
