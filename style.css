@@ -921,6 +921,9 @@ body.theme-light-minimal .sort-select option {
 /* Track Info */
 .track-info {
   text-align: center;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 #track-title {
@@ -929,6 +932,8 @@ body.theme-light-minimal .sort-select option {
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 6px;
+  width: 100%;
+  max-width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
